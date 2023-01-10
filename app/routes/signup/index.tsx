@@ -13,9 +13,11 @@ export async function action({ request }: ActionArgs) {
   session.set("name", name);
   session.set("email", email);
 
+  const commitedSession = await commitSession(session)
+  
   return redirect("/signup/address", {
     headers: {
-      "Set-Cookie": await commitSession(session),
+      "Set-Cookie": commitedSession
     },
   });
 }
